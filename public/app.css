@@ -97,7 +97,7 @@ table a:hover, .w3-padding a:hover{
     color: rgb(255, 85, 85);
 }
 .w3-button.w3-green,.submit_btn{
-    background-color: rgb(255, 85, 85);
+    background-color: rgb(255, 85, 85)!important;
     color:white !important;
     margin:1em;
     padding:0.5em 1em;
