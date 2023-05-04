@@ -7,6 +7,8 @@ use App\Models\Type;
 use App\Models\User;
 use App\Models\Experience;
 use App\Models\Project;
+use App\Models\Skill;
+use App\Models\ProjectSkill;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/skills', function(){
 
-    $skills = Type::orderBy('title')->get();
+    $skills = Skill::orderBy('title')->get();
+
+    foreach($skills as $key => $skill)
+    {
+        if($skill['image'])
+        {
+            $skills[$key]['image'] = env('APP_URL').'storage/'.$skill['image'];
+        }
+    }
     return $skills;
 
 });
@@ -37,21 +47,31 @@ Route::get('/types', function(){
 
 });
 
+Route::get('/users', function(){
+
+    $users = User::orderBy('first')->get();
+    return $users;
+
+});
+
 Route::get('/experiences', function(){
 
-    $experiences = Experience::orderBy('ended_at')->get();
+    $experiences = Experience::orderBy('ended_at','desc')->get();
     return $experiences;
 
 });
 
 Route::get('/projects', function(){
 
-    $projects = Project::orderBy('created_at')->get();
+    $projects = Project::orderBy('created_at','desc')->get();
+    
 
     foreach($projects as $key => $project)
     {
         $projects[$key]['user'] = User::where('id', $project['user_id'])->first();
         $projects[$key]['type'] = Type::where('id', $project['type_id'])->first();
+
+        $projects[$key]['skills'] = $project->skills;
 
         if($project['image'])
         {

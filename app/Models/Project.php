@@ -32,7 +32,7 @@ class Project extends Model
 
     public function user()
     {
-        return $this->belongsTo(user::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
     
     public function getRouteKeyName()
@@ -44,4 +44,10 @@ class Project extends Model
     {
         return $this->belongsToMany(Skill::class);
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
+
 }
