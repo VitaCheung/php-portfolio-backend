@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/skills', function(){
 
-    $skills = Skill::orderBy('title')->get();
+    $skills = Skill::orderBy('id')->get();
 
     foreach($skills as $key => $skill)
     {
